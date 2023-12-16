@@ -1,20 +1,77 @@
-// p2-cv.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// Project UID af1f95f547e44c8ea88730dfb185559d
+// p2-cv.cpp : This file contains the 'main' function. 
+// Program execution begins and ends there.
 //
 
 #include <iostream>
+#include <string>
+#include <fstream>
+#include "processing.h"
+using namespace std;
 
-int main()
+void print_error()
 {
-    std::cout << "Hello World!\n";
+    cout << "Usage: resize.exe IN_FILENAME OUT_FILENAME WIDTH [HEIGHT]\n"
+        << "WIDTH and HEIGHT must be less than or equal to original" << endl;
+
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+int main( int argc, char *argv[])
+{
+    if (argc < 4 || argc > 5)
+    {
+        print_error();
+        return 1;
+    }
+    if (stoi(argv[3]) <= 0 )
+    {
+        print_error();
+        return 1;
+    }
+    if (argc > 4 && stoi(argv[4]) <= 0)
+    {
+        print_error();
+        return 1;
+    }
+    ifstream fin(argv[1]);
+    if (!fin)
+    {
+        cout << "Error opening file: " << argv[1] << endl;
+        return 1;
+    }
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+    Image* img = new Image;
+    Image_init(img, fin);
+
+    if (stoi(argv[3]) > Image_width(img))
+    {
+        print_error();
+        delete img;
+        return 1;
+    }
+    if (argc > 4 && stoi(argv[4]) > Image_height(img))
+    {
+        print_error();
+        delete img;
+        return 1;
+    }
+
+    if (argc > 4)
+    {
+        seam_carve(img, stoi(argv[3]), stoi(argv[4]));
+    }
+    else
+    {
+        seam_carve(img, stoi(argv[3]), Image_height(img));
+    }
+    ofstream fout(argv[2]);
+    if (!fout)
+    {
+        cout << "Error opening file: " << argv[2] << endl;
+        delete img;
+        return 1;
+    }
+    Image_print(img, fout);
+    delete img;
+}
+

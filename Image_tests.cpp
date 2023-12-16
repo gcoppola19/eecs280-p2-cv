@@ -47,7 +47,66 @@ TEST(test_print_basic) {
 
 // IMPLEMENT YOUR TEST FUNCTIONS HERE
 // You are encouraged to use any functions from Image_test_helpers.h as needed.
+TEST(test_image_init)
+{
+	string input = "P3\n2 2\n255\n255 0 0 0 255 0 \n";
+	input += "0 0 255 255 255 255 \n";
+	istringstream ss_input(input);
+	Image* img = new Image;
+	Image_init(img, ss_input);
 
+	Pixel red = { 255,0,0 };
+	assert(Pixel_equal(Image_get_pixel( img, 0, 0), red));
+	delete img;
+}
+
+TEST(test_image_width)
+{
+	Image* img = new Image;
+	Image_init(img, 5, 12);
+	ASSERT_EQUAL(Image_width(img), 5);
+	delete img;
+}
+
+TEST(test_image_height)
+{
+	Image* img = new Image;
+	Image_init(img, 5, 12);
+	ASSERT_EQUAL(Image_height(img),12);
+	delete img;
+}
+
+TEST(test_image_get_pixel)
+{
+	Image* img = new Image;
+	Image_init(img, 2, 2);
+	const Pixel red = { 255, 0, 0 };
+	const Pixel green = { 0, 255, 0 };
+	const Pixel blue = { 0, 0, 255 };
+	Image_set_pixel(img, 1, 1, red);
+	Image_set_pixel(img, 0, 1, green);
+	Image_set_pixel(img, 1, 0, blue);
+
+	assert(Pixel_equal(Image_get_pixel(img, 1, 1), red));
+	delete img;
+}
+
+TEST(test_image_fill)
+{
+	Image* img = new Image;
+	const Pixel blue = { 0, 0, 255 };
+	Image_init(img, 3, 3);
+	Image_fill(img, blue);
+	for (int i = 0; i < Image_height(img); ++i)
+	{
+		for (int j = 0; j < Image_width(img); ++j)
+		{
+			assert(Pixel_equal(Image_get_pixel(img, i, j), blue));
+			
+		}
+	}
+	delete img;
+}
 // NOTE: The unit test framework tutorial in Lab 2 originally
 // had a semicolon after TEST_MAIN(). Although including and
 // excluding the semicolon are both correct according to the c++

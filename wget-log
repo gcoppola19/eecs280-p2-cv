@@ -2,4 +2,14 @@
 Resolving eecs280staff.github.io (eecs280staff.github.io)... 198.51.44.5, 198.51.45.5, 198.51.44.69, ...
 Connecting to eecs280staff.github.io (eecs280staff.github.io)|198.51.44.5|:443... failed: Connection timed out.
 Connecting to eecs280staff.github.io (eecs280staff.github.io)|198.51.45.5|:443... failed: Connection timed out.
-Connecting to eecs280staff.github.io (eecs280staff.github.io)|198.51.44.69|:443... 
+Connecting to eecs280staff.github.io (eecs280staff.github.io)|198.51.44.69|:443... failed: Connection timed out.
+Connecting to eecs280staff.github.io (eecs280staff.github.io)|205.251.194.180|:443... failed: Connection timed out.
+Connecting to eecs280staff.github.io (eecs280staff.github.io)|185.199.111.153|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 6458 (6.3K) [application/octet-stream]
+Saving to: ‘.gitignore’
+
+     0K ......                                                100%  362K=0.02s
+
+2023-01-26 13:32:13 (362 KB/s) - ‘.gitignore’ saved [6458/6458]
+
